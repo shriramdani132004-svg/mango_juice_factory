@@ -28,8 +28,18 @@ spring:
 server:
   port: 8080
 
+jwt:
+  secret: ${JWT_SECRET:c21hcnRmYWN0b3J5and0c2VjcmV0a2V5Zm9ydGVzdGluZ29ubHltdXN0YmVjaGFuZ2VkaW4=}
+  expiration: ${JWT_EXPIRATION:86400000}
+
+simulation:
+  speed-multiplier: ${SIMULATION_SPEED:20}
+  tick-interval-ms: ${SIMULATION_TICK_MS:500}
+  mode: ${SIMULATION_MODE:DEMO}
+
 logging:
   level:
     root: INFO
     com.smartfactory: DEBUG
     org.flywaydb: INFO
+    com.smartfactory.security: DEBUG
