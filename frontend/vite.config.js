@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
+  base: '/mango_juice_factory/',
   server: {
     port: 5173,
     proxy: {
