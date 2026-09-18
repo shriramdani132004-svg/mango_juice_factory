@@ -1,12 +1,59 @@
+# === Java / Spring Boot ===
+target/
+*.class
+*.jar
+*.war
+*.ear
+hs_err_pid*
+replay_pid*
+
+# === Node / React / Vite ===
 node_modules/
 dist/
 build/
-target/
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.tsbuildinfo
+
+# === IDE ===
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+.settings/
+.classpath
+.project
+*.swp
+*.swo
+*~
+
+# === OS ===
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# === Logs ===
+*.log
+logs/
+
+# === Coverage ===
+coverage/
+*.lcov
+
+# === Docker ===
+.docker/
+
+# === Environment / Secrets ===
 .env
 .env.*
 !.env.example
-.idea/
-.vscode/
-*.log
-coverage/
-.DS_Store
+
+# === Maven ===
+.mvn/wrapper/maven-wrapper.jar
+
+# === Gradle ===
+.gradle/
