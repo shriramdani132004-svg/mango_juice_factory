@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smartfactory.dto.CreateOrderRequest;
 import com.smartfactory.entity.*;
-import com.smartfactory.enums.MaterialCategory;
+import com.smartfactory.enums.MaterialType;
 import com.smartfactory.enums.Role;
 import com.smartfactory.repository.*;
 import com.smartfactory.security.JwtUtil;
@@ -72,15 +72,15 @@ class SimulationIntegrationTests {
             recipe.setOutputUnit("btl");
             recipeRepository.save(recipe);
 
-            Material mangoes = new Material("Fresh Mangoes", "RAW-MANGO", MaterialCategory.RAW_MATERIAL, "kg");
+            Material mangoes = new Material("Fresh Mangoes", "RAW-MANGO", MaterialType.RAW, "kg");
             materialRepository.save(mangoes);
-            Material water = new Material("Water", "RAW-WATER", MaterialCategory.RAW_MATERIAL, "L");
+            Material water = new Material("Water", "RAW-WATER", MaterialType.RAW, "L");
             materialRepository.save(water);
-            Material sugar = new Material("Sugar", "RAW-SUGAR", MaterialCategory.RAW_MATERIAL, "kg");
+            Material sugar = new Material("Sugar", "RAW-SUGAR", MaterialType.RAW, "kg");
             materialRepository.save(sugar);
-            Material bottles = new Material("500mL PET Bottles", "PKG-BOTTLE500", MaterialCategory.PACKAGING, "pcs");
+            Material bottles = new Material("500mL PET Bottles", "PKG-BOTTLE500", MaterialType.PACKAGING, "pcs");
             materialRepository.save(bottles);
-            Material caps = new Material("Bottle Caps", "PKG-CAP", MaterialCategory.PACKAGING, "pcs");
+            Material caps = new Material("Bottle Caps", "PKG-CAP", MaterialType.PACKAGING, "pcs");
             materialRepository.save(caps);
 
             addInventory(mangoes, new BigDecimal("50000.00"), "kg");

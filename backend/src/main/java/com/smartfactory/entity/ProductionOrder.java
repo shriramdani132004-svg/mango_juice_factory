@@ -42,7 +42,7 @@ public class ProductionOrder {
     private LocalDateTime deadline;
 
     @Column(name = "status", nullable = false, length = 30)
-    private String status = "REQUIREMENT_CHECK";
+    private String status = "DRAFT";
 
     @Column(name = "estimated_output_qty", precision = 12, scale = 4)
     private BigDecimal estimatedOutputQty;

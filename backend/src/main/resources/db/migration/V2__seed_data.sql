@@ -168,4 +168,4 @@ INSERT INTO recipe_materials (recipe_id, material_id, quantity_per_batch, unit, 
 -- ============================================================
 
 INSERT INTO users (user_id, username, password_hash, full_name, role) VALUES
-(1, 'admin', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'System Administrator', 'ADMIN');
+(1, 'admin', '$2a$10$WhBGYdFrB1jsf9hErmqAkuDGANy8b0zsRRmzA7VFH3YiOEMMkmsca', 'System Administrator', 'ADMIN');

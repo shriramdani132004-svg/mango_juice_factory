@@ -1,5 +1,13 @@
 -- Part 7: Quality Control + Batch Verification
 
+-- Add missing enum values needed by Part 7 code
+ALTER TYPE phase_status ADD VALUE IF NOT EXISTS 'WAITING_FOR_QUALITY';
+ALTER TYPE batch_status ADD VALUE IF NOT EXISTS 'QUARANTINED';
+ALTER TYPE batch_status ADD VALUE IF NOT EXISTS 'REPROCESS_REQUESTED';
+
+-- Drop the V1 basic quality_checks table (different schema)
+DROP TABLE IF EXISTS quality_checks;
+
 CREATE TABLE quality_checks (
     quality_check_id BIGSERIAL PRIMARY KEY,
     batch_id BIGINT NOT NULL REFERENCES batches(batch_id),

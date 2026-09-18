@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smartfactory.dto.CreateOrderRequest;
 import com.smartfactory.entity.*;
-import com.smartfactory.enums.MaterialCategory;
+import com.smartfactory.enums.MaterialType;
 import com.smartfactory.enums.QualityCheckStatus;
 import com.smartfactory.enums.QualityResult;
 import com.smartfactory.enums.Role;
@@ -80,11 +80,11 @@ class QualityCheckIntegrationTests {
             recipe.setOutputUnit("btl");
             recipeRepository.save(recipe);
 
-            Material mangoes = new Material("Fresh Mangoes", "RAW-MANGO", MaterialCategory.RAW_MATERIAL, "kg");
+            Material mangoes = new Material("Fresh Mangoes", "RAW-MANGO", MaterialType.RAW, "kg");
             materialRepository.save(mangoes);
-            Material water = new Material("Water", "RAW-WATER", MaterialCategory.RAW_MATERIAL, "L");
+            Material water = new Material("Water", "RAW-WATER", MaterialType.RAW, "L");
             materialRepository.save(water);
-            Material sugar = new Material("Sugar", "RAW-SUGAR", MaterialCategory.RAW_MATERIAL, "kg");
+            Material sugar = new Material("Sugar", "RAW-SUGAR", MaterialType.RAW, "kg");
             materialRepository.save(sugar);
 
             addInventory(mangoes, new BigDecimal("50000.00"), "kg");

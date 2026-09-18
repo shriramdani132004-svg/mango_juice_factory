@@ -1,7 +1,7 @@
 package com.smartfactory.controller;
 
 import com.smartfactory.dto.MaterialDto;
-import com.smartfactory.enums.MaterialCategory;
+import com.smartfactory.enums.MaterialType;
 import com.smartfactory.service.MaterialService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +34,7 @@ public class MaterialController {
     }
 
     @GetMapping("/type/{type}")
-    public ResponseEntity<List<MaterialDto>> getMaterialsByType(@PathVariable MaterialCategory type) {
+    public ResponseEntity<List<MaterialDto>> getMaterialsByType(@PathVariable MaterialType type) {
         return ResponseEntity.ok(materialService.getMaterialsByType(type));
     }
 }

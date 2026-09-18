@@ -1,6 +1,6 @@
 package com.smartfactory.entity;
 
-import com.smartfactory.enums.MaterialCategory;
+import com.smartfactory.enums.MaterialType;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -22,7 +22,7 @@ public class Material {
 
     @Column(name = "material_type", nullable = false)
     @Enumerated(EnumType.STRING)
-    private com.smartfactory.enums.MaterialCategory materialType;
+    private MaterialType materialType;
 
     @Column(name = "unit", nullable = false, length = 20)
     private String unit;
@@ -61,7 +61,7 @@ public class Material {
 
     public Material() {}
 
-    public Material(String name, String materialCode, com.smartfactory.enums.MaterialCategory materialType, String unit) {
+    public Material(String name, String materialCode, MaterialType materialType, String unit) {
         this.name = name;
         this.materialCode = materialCode;
         this.materialType = materialType;
@@ -74,8 +74,8 @@ public class Material {
     public void setName(String name) { this.name = name; }
     public String getMaterialCode() { return materialCode; }
     public void setMaterialCode(String materialCode) { this.materialCode = materialCode; }
-    public com.smartfactory.enums.MaterialCategory getMaterialType() { return materialType; }
-    public void setMaterialType(com.smartfactory.enums.MaterialCategory materialType) { this.materialType = materialType; }
+    public MaterialType getMaterialType() { return materialType; }
+    public void setMaterialType(MaterialType materialType) { this.materialType = materialType; }
     public String getUnit() { return unit; }
     public void setUnit(String unit) { this.unit = unit; }
     public String getDescription() { return description; }

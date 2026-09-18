@@ -14,6 +14,9 @@ import com.smartfactory.repository.MaterialRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -258,7 +261,8 @@ public class InventoryService {
 
     @Transactional(readOnly = true)
     public List<InventoryTransactionDto> getRecentTransactions(int limit) {
-        return transactionRepository.findRecentTransactions(limit).stream()
+        return transactionRepository.findRecentTransactions(
+            PageRequest.of(0, limit, Sort.by(Sort.Direction.DESC, "createdAt"))).stream()
             .map(this::toTransactionDto)
             .toList();
     }
@@ -279,7 +283,7 @@ public class InventoryService {
             inv.getMaterial().getId(),
             inv.getMaterial().getName(),
             inv.getMaterial().getMaterialCode(),
-            inv.getMaterial().getMaterialType().name(),
+            inv.getMaterial().getMaterialType() != null ? inv.getMaterial().getMaterialType().name() : "UNKNOWN",
             inv.getCurrentQuantity(),
             inv.getReservedQuantity(),
             inv.getAvailableQuantity(),

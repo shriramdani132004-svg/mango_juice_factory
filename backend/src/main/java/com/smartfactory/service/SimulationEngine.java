@@ -2,6 +2,7 @@ package com.smartfactory.service;
 
 import com.smartfactory.dto.*;
 import com.smartfactory.entity.*;
+import com.smartfactory.enums.MaterialType;
 import com.smartfactory.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -306,6 +307,7 @@ public class SimulationEngine {
                 Material m = new Material();
                 m.setName("Intermediate: " + phaseType);
                 m.setMaterialCode(materialCode);
+                m.setMaterialType(MaterialType.FINISHED);
                 m.setUnit("kg");
                 m.setIsActive(true);
                 return materialRepository.save(m);
@@ -319,6 +321,7 @@ public class SimulationEngine {
                 Material m = new Material();
                 m.setName("Waste: " + phaseType);
                 m.setMaterialCode(materialCode);
+                m.setMaterialType(MaterialType.RAW);
                 m.setUnit("kg");
                 m.setIsActive(true);
                 return materialRepository.save(m);

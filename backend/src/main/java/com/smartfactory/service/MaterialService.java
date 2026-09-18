@@ -2,7 +2,7 @@ package com.smartfactory.service;
 
 import com.smartfactory.dto.MaterialDto;
 import com.smartfactory.entity.Material;
-import com.smartfactory.enums.MaterialCategory;
+import com.smartfactory.enums.MaterialType;
 import com.smartfactory.exception.ResourceNotFoundException;
 import com.smartfactory.repository.MaterialRepository;
 import org.springframework.stereotype.Service;
@@ -38,7 +38,7 @@ public class MaterialService {
         return toDto(material);
     }
 
-    public List<MaterialDto> getMaterialsByType(MaterialCategory type) {
+    public List<MaterialDto> getMaterialsByType(MaterialType type) {
         return materialRepository.findByMaterialType(type).stream()
             .map(this::toDto)
             .toList();

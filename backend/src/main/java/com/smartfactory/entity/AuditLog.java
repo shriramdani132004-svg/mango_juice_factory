@@ -1,6 +1,8 @@
 package com.smartfactory.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import java.time.LocalDateTime;
 
 @Entity
@@ -25,9 +27,11 @@ public class AuditLog {
     @Column(name = "entity_id")
     private Long entityId;
 
+    @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "old_values", columnDefinition = "jsonb")
     private String oldValues;
 
+    @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "new_values", columnDefinition = "jsonb")
     private String newValues;
 

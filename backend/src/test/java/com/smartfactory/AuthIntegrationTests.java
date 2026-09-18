@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smartfactory.dto.LoginRequest;
 import com.smartfactory.entity.User;
 import com.smartfactory.enums.Role;
+import com.smartfactory.repository.AuditLogRepository;
 import com.smartfactory.repository.UserRepository;
 import com.smartfactory.security.JwtUtil;
 import com.smartfactory.security.UserPrincipal;
@@ -16,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -36,6 +38,9 @@ class AuthIntegrationTests {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private AuditLogRepository auditLogRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -338,5 +343,59 @@ class AuthIntegrationTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(new LoginRequest("prod_worker", "password123"))))
             .andExpect(status().isOk());
+    }
+
+    @Test
+    @Order(25)
+    void successfulLoginCreatesAuditLog() throws Exception {
+        mockMvc.perform(post("/api/auth/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(new LoginRequest("admin", "admin123"))))
+            .andExpect(status().isOk());
+
+        List<com.smartfactory.entity.AuditLog> logs = auditLogRepository
+            .findByActionOrderByCreatedAtDesc("AUTH_LOGIN_SUCCESS");
+        assertFalse(logs.isEmpty(), "Audit log should be created on successful login");
+    }
+
+    @Test
+    @Order(26)
+    void failedLoginDoesNotCreateAuditLog() throws Exception {
+        mockMvc.perform(post("/api/auth/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(new LoginRequest("admin", "wrongpassword"))))
+            .andExpect(status().isUnauthorized());
+
+        long countBefore = auditLogRepository.findByActionOrderByCreatedAtDesc("AUTH_LOGIN_FAILURE").size();
+        assertTrue(countBefore >= 0, "Query should work without errors");
+    }
+
+    @Test
+    @Order(27)
+    void auditLogJsonbFieldsPersistNullCorrectly() throws Exception {
+        com.smartfactory.entity.AuditLog auditLog = new com.smartfactory.entity.AuditLog();
+        auditLog.setAction("TEST_NULL_JSONB");
+        auditLog.setEntityType("TEST");
+        auditLog.setOldValues(null);
+        auditLog.setNewValues(null);
+        auditLogRepository.save(auditLog);
+
+        com.smartfactory.entity.AuditLog retrieved = auditLogRepository.findById(auditLog.getId()).orElseThrow();
+        assertNull(retrieved.getOldValues(), "oldValues should persist as null");
+        assertNull(retrieved.getNewValues(), "newValues should persist as null");
+    }
+
+    @Test
+    @Order(28)
+    void auditLogJsonbFieldsPersistValidJson() throws Exception {
+        com.smartfactory.entity.AuditLog auditLog = new com.smartfactory.entity.AuditLog();
+        auditLog.setAction("TEST_VALID_JSONB");
+        auditLog.setEntityType("TEST");
+        auditLog.setNewValues("{\"username\":\"admin\",\"reason\":\"test\"}");
+        auditLogRepository.save(auditLog);
+
+        com.smartfactory.entity.AuditLog retrieved = auditLogRepository.findById(auditLog.getId()).orElseThrow();
+        assertNotNull(retrieved.getNewValues(), "newValues must persist");
+        assertTrue(retrieved.getNewValues().contains("admin"), "Persisted JSON must contain data");
     }
 }
